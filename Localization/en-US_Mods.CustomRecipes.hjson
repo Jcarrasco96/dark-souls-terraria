@@ -1,0 +1,66 @@
+Items: {
+	RingOfStrength: {
+		DisplayName: Ring Of Strength
+		Tooltip: ""
+	}
+
+	RingofSteelProtection: {
+		Tooltip: ""
+		DisplayName: Ring of Steel Protection
+	}
+
+	RingOfRay: {
+		Tooltip: ""
+		DisplayName: Ring Of Ray
+	}
+
+	DarkStoneplateRing: {
+		Tooltip: ""
+		DisplayName: Dark Stone-plate Ring
+	}
+
+	CursebiteRing: {
+		Tooltip: ""
+		DisplayName: Curse-bite Ring
+	}
+
+	CloranthyRing: {
+		Tooltip: ""
+		DisplayName: Cloranthy Ring
+	}
+
+	Shortsword: {
+		Tooltip: ""
+		DisplayName: Shortsword
+	}
+
+	CustomSword: {
+		Tooltip: ""
+		DisplayName: Custom Sword
+	}
+
+	RingOfLife: {
+		DisplayName: Ring Of Life
+		Tooltip: ""
+	}
+
+	SerpentRing: {
+		DisplayName: Serpent Ring
+		Tooltip: ""
+	}
+
+	BonfireItem: {
+		DisplayName: Bonfire Item
+		Tooltip: ""
+	}
+}
+
+Buffs: {
+	ExampleDefenseDebuff: {
+		Description: Buffs.ExampleDefenseDebuff.Description
+		DisplayName: Example Defense Debuff
+	}
+}
+
+InfoDisplays.MyInfoDisplay.DisplayName: My Info Display
+Tiles.DarkSoulsBonfire.DisplayName: Hoguera

@@ -1,0 +1,3 @@
+displayName = Custom Recipes
+author = jcarrasco96
+version = 0.1

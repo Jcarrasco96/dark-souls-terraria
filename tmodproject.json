@@ -1,0 +1,22 @@
+{
+  "rootNamespace": "CustomRecipes",
+  "fileMap": {
+    "Items\\Shortsword.cs": "CustomRecipes.Items",
+    "Items\\CustomSword.cs": "CustomRecipes.Items",
+    "RingSlot.cs": "CustomRecipes",
+    "RingSlotsUI.cs": "CustomRecipes",
+    "RingSystem.cs": "CustomRecipes",
+    "RingAccessorySlot.cs": "CustomRecipes",
+    "Rings\\RingOfStrength.cs": "CustomRecipes.Rings",
+    "Rings\\ModRing.cs": "CustomRecipes.Rings",
+    "Rings\\RingOfRay.cs": "CustomRecipes.Rings",
+    "Buffs\\ExampleDefenseDebuff.cs": "CustomRecipes.Buffs",
+    "Rings\\RingofSteelProtection.cs": "CustomRecipes.Rings",
+    "Rings\\DarkStoneplateRing.cs": "CustomRecipes.Rings",
+    "Rings\\CursebiteRing.cs": "CustomRecipes.Rings",
+    "Rings\\CloranthyRing.cs": "CustomRecipes.Rings",
+    "BonfireTile.cs": "CustomRecipes",
+    "BonfireItem.cs": "CustomRecipes",
+    "BonfireSystem.cs": "CustomRecipes"
+  }
+}
