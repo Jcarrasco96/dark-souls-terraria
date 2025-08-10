@@ -1,13 +1,11 @@
-using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CustomRecipes.Bonfire;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class BonfireItem : ModItem
 {
-    
     public override void SetStaticDefaults()
     {
         // DisplayName.SetDefault("Hoguera");
@@ -25,10 +23,10 @@ public class BonfireItem : ModItem
         // Item.useStyle = ItemUseStyleID.Swing;
         // Item.consumable = true;
         // Item.createTile = ModContent.TileType<BonfireTile>();
-        
+
         Item.DefaultToPlaceableTile(ModContent.TileType<BonfireTile>());
     }
-    
+
     public override void AddRecipes()
     {
         var r1 = CreateRecipe();
@@ -40,10 +38,9 @@ public class BonfireItem : ModItem
         r2.AddIngredient(ItemID.Campfire);
         r2.AddIngredient(ItemID.LeadBroadsword);
         r2.Register();
-        
+
         var r3 = CreateRecipe();
         r3.AddIngredient(ItemID.Wood, 2);
         r3.Register();
     }
-    
 }

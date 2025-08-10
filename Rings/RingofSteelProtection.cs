@@ -1,17 +1,23 @@
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CustomRecipes.Rings;
 
-public class RingofSteelProtection : ModRing
+public class RingOfSteelProtection : ModRing
 {
-    
-    public override void ApplyEffects(Player player)
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
+        tooltips.Add(new TooltipLine(Mod, "WeaponParams", "+5 defense"));
+        base.ModifyTooltips(tooltips);
+    }
+
+    public override void UpdateAccessory(Player player, bool hideVisual)
+    {
+        base.UpdateAccessory(player, hideVisual);
+
         player.statDefense += 5; // +5 defensa
-        
-        base.ApplyEffects(player);
     }
 
     public override void AddRecipes()
@@ -23,5 +29,4 @@ public class RingofSteelProtection : ModRing
             .AddTile(TileID.Anvils)
             .Register();
     }
-
 }

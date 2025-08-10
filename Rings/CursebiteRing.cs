@@ -1,17 +1,24 @@
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CustomRecipes.Rings;
 
 public class CursebiteRing : ModRing
 {
-    
-    public override void ApplyEffects(Player player)
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
+        tooltips.Add(new TooltipLine(Mod, "WeaponParams", "Immune to Cursed Inferno and Silenced buffs"));
+        base.ModifyTooltips(tooltips);
+    }
+
+    public override void UpdateAccessory(Player player, bool hideVisual)
+    {
+        base.UpdateAccessory(player, hideVisual);
+
         player.buffImmune[BuffID.CursedInferno] = true;
         player.buffImmune[BuffID.Silenced] = true;
-        
-        base.ApplyEffects(player);
     }
 
     public override void AddRecipes()
@@ -23,5 +30,4 @@ public class CursebiteRing : ModRing
             .AddTile(TileID.Anvils)
             .Register();
     }
-
 }

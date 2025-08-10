@@ -1,22 +1,19 @@
 using System.Collections.Generic;
-using System.CommandLine;
-using CustomRecipes.Bonfire;
+using System.Linq;
+using CustomRecipes.UI;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace CustomRecipes;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class RingSystem : ModSystem
 {
     private RingSlotsUi _ringUi;
     private UserInterface _userInterface;
-
-    public override void Load()
-    {
-        InitComponent();
-    }
 
     public override void OnModLoad()
     {
@@ -29,10 +26,15 @@ public class RingSystem : ModSystem
         {
             _userInterface?.Update(gameTime);
         }
-        
-        if (_bonfireInterface != null && _bonfireInterface?.CurrentState != null)
+
+        if (_bonfireInterface is { CurrentState: not null })
         {
             _bonfireInterface.Update(gameTime);
+        }
+
+        if (_deathInterface?.CurrentState != null)
+        {
+            _deathInterface.Update(gameTime);
         }
     }
 
@@ -47,7 +49,7 @@ public class RingSystem : ModSystem
 
         layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer("CustomRecipes: Ring UI", delegate
             {
-                if (Main.playerInventory) // Solo dibujar UI si inventario abierto
+                if (Main.playerInventory)
                 {
                     _userInterface.Draw(Main.spriteBatch, new GameTime());
                 }
@@ -61,6 +63,26 @@ public class RingSystem : ModSystem
             },
             InterfaceScaleType.UI)
         );
+
+        var deathTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
+        if (deathTextIndex == -1)
+        {
+            return;
+        }
+
+        layers[deathTextIndex] = new LegacyGameInterfaceLayer("CustomRecipes: Block Death Text",
+            () => !_deathUi.IsActive, InterfaceScaleType.UI);
+
+        layers.Insert(deathTextIndex, new LegacyGameInterfaceLayer("CustomRecipes: Death Screen UI", () =>
+            {
+                if (_deathUi.IsActive)
+                {
+                    _deathInterface.Draw(Main.spriteBatch, new GameTime());
+                }
+
+                return true;
+            },
+            InterfaceScaleType.UI));
     }
 
     private void InitComponent()
@@ -69,29 +91,41 @@ public class RingSystem : ModSystem
         _ringUi.Activate();
         _userInterface = new UserInterface();
         _userInterface.SetState(_ringUi);
-        
-        _bonfireUi = new BonfireUI();
+
+        _bonfireUi = new BonfireUi();
         _bonfireUi.Activate();
         _bonfireInterface = new UserInterface();
         // _bonfireInterface.SetState(_bonfireUi);
+
+        if (Main.dedServ)
+        {
+            return;
+        }
+
+        _deathUi = new DeathUi();
+        _deathUi.Activate();
+        _deathInterface = new UserInterface();
+        _deathInterface.SetState(null);
+
+        _deathUi.OnFadeOutComplete = () => { _deathInterface?.SetState(null); };
     }
-    
+
     private UserInterface _bonfireInterface;
-    private BonfireUI _bonfireUi;
+    private BonfireUi _bonfireUi;
 
     public readonly List<Point> Bonfires = [];
-    
-    public void ShowUi()
+
+    public void ShowBonfiresUi()
     {
         _bonfireInterface?.SetState(_bonfireUi);
         _bonfireUi.UpdateBonfiresList(Bonfires);
     }
 
-    public void HideUi()
+    public void HideBonfiresUi()
     {
         _bonfireInterface?.SetState(null);
     }
-    
+
     public void TeleportToBonfire(Player player, int index)
     {
         if (index < 0 || index >= Bonfires.Count)
@@ -101,9 +135,51 @@ public class RingSystem : ModSystem
         }
 
         var bonfirePos = Bonfires[index];
-        
+
         player.Teleport(new Vector2(bonfirePos.X * 16, bonfirePos.Y * 16 - 32));
         Main.NewText($"Teletransportado a Hoguera {index + 1}!", Color.Green);
     }
-    
+
+    public override void SaveWorldData(TagCompound tag)
+    {
+        base.SaveWorldData(tag);
+
+        tag["BonfiresPlaced"] = Bonfires.Select(p => new TagCompound
+        {
+            ["X"] = p.X,
+            ["Y"] = p.Y
+        }).ToList();
+    }
+
+    public override void LoadWorldData(TagCompound tag)
+    {
+        base.LoadWorldData(tag);
+
+        Bonfires.Clear();
+
+        if (!tag.ContainsKey("BonfiresPlaced"))
+        {
+            return;
+        }
+
+        var loadedItems = tag.GetList<TagCompound>("BonfiresPlaced");
+        Bonfires.AddRange(loadedItems.Select(tc => new Point(tc.GetInt("X"), tc.GetInt("Y"))));
+    }
+
+    private UserInterface _deathInterface;
+    private DeathUi _deathUi;
+
+    public void ShowDeathUi()
+    {
+        _deathInterface.SetState(_deathUi);
+        _deathUi.StartFadeIn();
+    }
+
+    public void HideDeathUi()
+    {
+        if (_deathInterface?.CurrentState != null)
+        {
+            _deathUi.StartFadeOut();
+        }
+    }
 }

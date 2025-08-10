@@ -11,10 +11,10 @@
     "Rings\\ModRing.cs": "CustomRecipes.Rings",
     "Rings\\RingOfRay.cs": "CustomRecipes.Rings",
     "Buffs\\ExampleDefenseDebuff.cs": "CustomRecipes.Buffs",
-    "Rings\\RingofSteelProtection.cs": "CustomRecipes.Rings",
+    "Rings\\RingOfSteelProtection.cs": "CustomRecipes.Rings",
     "Rings\\DarkStoneplateRing.cs": "CustomRecipes.Rings",
     "Rings\\CursebiteRing.cs": "CustomRecipes.Rings",
-    "Rings\\CloranthyRing.cs": "CustomRecipes.Rings",
+    "Rings\\ChloranthyRing.cs": "CustomRecipes.Rings",
     "BonfireTile.cs": "CustomRecipes",
     "BonfireItem.cs": "CustomRecipes",
     "BonfireSystem.cs": "CustomRecipes"

@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 
 namespace CustomRecipes.Buffs;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class ExampleDefenseDebuff : ModBuff
 {
     private const int DefenseReductionPercent = 25; // This is the percentage of defense reduction applied by the buff.
@@ -30,5 +31,4 @@ public class ExampleDefenseDebuff : ModBuff
         player.statDefense *= DefenseMultiplier;
         player.GetDamage(DamageClass.Generic) += 0.09f;
     }
-    
 }

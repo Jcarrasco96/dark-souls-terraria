@@ -3,23 +3,24 @@ using Terraria.ModLoader;
 
 namespace CustomRecipes.Items;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class Shortsword : ModItem
 {
-
     public override void SetDefaults()
     {
-        Item.damage = 50;
+        Item.damage = 40;
         Item.DamageType = DamageClass.Melee;
-        Item.width = 100;
-        Item.height = 100;
-        Item.useTime = 12;
-        Item.useAnimation = 12;
+        Item.width = 64;
+        Item.height = 61;
+        Item.useTime = 20;
+        Item.useAnimation = 20;
         Item.useStyle = ItemUseStyleID.Swing;
-        Item.knockBack = 4f;
+        Item.knockBack = 3f;
         Item.value = 10;
-        Item.rare = ItemRarityID.White;
+        Item.rare = ItemRarityID.Red;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
+        Item.useTurn = true;
 
         // Item.noUseGraphic = true; // The sword is actually a "projectile", so the item should not be visible when used
         // Item.noMelee = true; // The projectile will do the damage and not the item
@@ -35,5 +36,4 @@ public class Shortsword : ModItem
             .AddTile(TileID.Anvils)
             .Register();
     }
-    
 }
