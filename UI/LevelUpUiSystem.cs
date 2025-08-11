@@ -24,7 +24,7 @@ public class LevelUpUiSystem : ModSystem
         _levelUpUi = new LevelUpUi();
         _levelUpUi.Activate();
         _levelUpInterface = new UserInterface();
-        _levelUpInterface.SetState(_levelUpUi);
+        // _levelUpInterface.SetState(_levelUpUi);
     }
 
     public override void Unload()

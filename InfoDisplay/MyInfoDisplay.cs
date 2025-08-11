@@ -22,7 +22,7 @@ public class MyInfoDisplay : Terraria.ModLoader.InfoDisplay
         // var text = RingPlayer.RingSlots.Where(ringSlot => ringSlot.ModItem is ModRing).Aggregate("", (current, ringSlot) => current + (ringSlot.Name + "\n"));
 
         // return "Equipped Rings:\n" + text.Trim() + $"\n{RingPlayer.Player.moveSpeed}";
-        return $"Luck: {RingPlayer.Player.luck}";
+        return $"Luck: {RingPlayer.Player.luck}, Souls: {RingPlayer.DsSouls}\nSTR: {RingPlayer.RealStr()}, DEX: {RingPlayer.RealDex()}, INT: {RingPlayer.RealInt()}, FAI: {RingPlayer.RealFai()}";
     }
 
     private static bool HasItemInRingInventory(int item)

@@ -5,8 +5,7 @@ namespace CustomRecipes.Extensions;
 
 public static class PlayerExtensions
 {
-    
-    public static int CountCoins(this Player player)
+    private static int CountCoins(this Player player)
     {
         var totalCopper = 0;
         for (var i = 0; i < 59; i++) // inventario normal

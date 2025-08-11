@@ -7,11 +7,11 @@ using Terraria.ModLoader;
 namespace CustomRecipes.Rings;
 
 // ReSharper disable once ClassNeverInstantiated.Global
-public class KnightsRing : ModRing
+public class PriestessRing : ModRing
 {
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
-        tooltips.Add(new TooltipLine(Mod, "WeaponParams", "+5 str"));
+        tooltips.Add(new TooltipLine(Mod, "WeaponParams", "+5 fai"));
         base.ModifyTooltips(tooltips);
     }
 
@@ -22,7 +22,7 @@ public class KnightsRing : ModRing
         // player.statDefense += 5; // +5 defensa
         // player.GetDamage(DamageClass.Generic) += 0.20f; // +5% daño
         
-        player.GetModPlayer<RingPlayer>().HasKnightsRingEffect = true;
+        player.GetModPlayer<RingPlayer>().HasPriestessRingEffect = true;
     }
 
     public override void AddRecipes()

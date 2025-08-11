@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CustomRecipes.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -40,6 +41,21 @@ public class RingSystem : ModSystem
 
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
     {
+        if (DrawGrid)
+        {
+            var index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (index != -1)
+            {
+                layers.Insert(index, new LegacyGameInterfaceLayer("TuMod: Grid Debug", delegate
+                    {
+                        DrawGridOverlay(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+            }
+        }
+        
         var mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 
         if (mouseTextIndex == -1)
@@ -182,4 +198,38 @@ public class RingSystem : ModSystem
             _deathUi.StartFadeOut();
         }
     }
+
+    private const bool DrawGrid = false;
+
+    private static void DrawGridOverlay(SpriteBatch spriteBatch)
+    {
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+            SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+
+        var pixel = Texture2DWhite();
+        const int spacing = 50; // cada 50px
+
+        for (var x = 0; x < Main.screenWidth; x += spacing)
+        {
+            spriteBatch.Draw(pixel, new Rectangle(x, 0, 1, Main.screenHeight), Color.Gray * 0.3f);
+        }
+
+        for (var y = 0; y < Main.screenHeight; y += spacing)
+        {
+            spriteBatch.Draw(pixel, new Rectangle(0, y, Main.screenWidth, 1), Color.Gray * 0.3f);
+        }
+
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+            SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+    }
+
+    private static Texture2D Texture2DWhite()
+    {
+        var tex = new Texture2D(Main.graphics.GraphicsDevice, 1, 1);
+        tex.SetData([Color.White]);
+        return tex;
+    }
+    
 }

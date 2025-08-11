@@ -10,8 +10,8 @@ Items: {
 	}
 
 	RingOfSteelProtection: {
-		Tooltip: ""
 		DisplayName: Ring Of Steel Protection
+		Tooltip: ""
 	}
 
 	RingOfRay: {
@@ -139,8 +139,43 @@ Items: {
 		Tooltip: ""
 	}
 
-	RingOfSteelProtection: {
-		DisplayName: Ring Of Steel Protection
+	HuntersRing: {
+		DisplayName: Hunters Ring
+		Tooltip: ""
+	}
+
+	PriestessRing: {
+		DisplayName: Priestess Ring
+		Tooltip: ""
+	}
+
+	ScholarRing: {
+		DisplayName: Scholar Ring
+		Tooltip: ""
+	}
+
+	BookStats: {
+		DisplayName: Book Stats
+		Tooltip: ""
+	}
+
+	BellowingDragoncrestRing: {
+		DisplayName: Bellowing Dragoncrest Ring
+		Tooltip: ""
+	}
+
+	DuskCrownRing: {
+		DisplayName: Dusk Crown Ring
+		Tooltip: ""
+	}
+
+	HornetRing: {
+		DisplayName: Hornet Ring
+		Tooltip: ""
+	}
+
+	YoungDragonRing: {
+		DisplayName: Young Dragon Ring
 		Tooltip: ""
 	}
 }
@@ -171,4 +206,11 @@ UI: {
 	}
 }
 
+BloodstainMessage:
+	'''
+	You have retrieved your lost souls and humanity!
+	Souls: +{0}
+	Humanity: +{1}
+	'''
 "Keybinds.Abrir UI de Leveleo.DisplayName": Abrir  U I de  Leveleo
+Projectiles.BloodstainProjectile.DisplayName: Bloodstain Projectile

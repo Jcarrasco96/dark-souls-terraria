@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using CustomRecipes.Dusts;
+using CustomRecipes.Items;
 using CustomRecipes.Rings;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -329,15 +331,52 @@ public class MyGlobalNpc : GlobalNPC
     {
         base.OnKill(npc);
 
-        if (npc.lastInteraction is < 0 or >= Main.maxPlayers)
+        var playerIndex = npc.lastInteraction;
+
+        if (playerIndex is < 0 or >= Main.maxPlayers)
         {
             return;
         }
 
+        var player = Main.player[playerIndex].GetModPlayer<RingPlayer>();
         if (npc.value > 0)
         {
-            Main.player[npc.lastInteraction].GetModPlayer<RingPlayer>().DropMoney(npc.value);
+            player.DropMoney(npc.value);
         }
+
+        var npcId = npc.type;
+        if (npc.boss || npcId is NPCID.LunarTowerNebula or NPCID.LunarTowerSolar or NPCID.LunarTowerStardust or NPCID.LunarTowerVortex)
+        {
+            return;
+        }
+
+        if (npc.SpawnedFromStatue || npc.friendly || npc.townNPC || npc.lifeMax <= 5 ||
+            npc.damage ==
+            0) // NPC hasn't been damaged by any Player + Souls farming with Statues and friendly NPCs and Boss parts disabled :)
+        {
+            return;
+        }
+
+        var souls = GetSoulsByNpc(npc, out var boss);
+
+        // if (Main.dedServ)
+        // {
+        //     var packet = Mod.GetPacket();
+        //     packet.Write((byte)DarkSouls.NetMessageTypes.GetSouls);
+        //     packet.Write(souls);
+        //     if (boss) // server sends souls to all clients (if NPC is downed boss)
+        //     {
+        //         packet.Send();
+        //     }
+        //     else
+        //     {
+        //         packet.Send(playerIndex); // if the client (specific player) kills someone other than boss
+        //     }
+        // }
+        // else // single player
+        // {
+        player.AddSouls(souls);
+        // }
     }
 
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
@@ -364,13 +403,411 @@ public class MyGlobalNpc : GlobalNPC
         //}
     }
 
-    // public override void ModifyShop(NPCShop shop)
-    // {
-    // switch (shop.NpcType)
-    // {
-    //     case NPCID.Merchant:
-    //         shop.Add<RingofSteelProtection>();
-    //         break;
-    // }
-    // }
+    public override void ModifyShop(NPCShop shop)
+    {
+        base.ModifyShop(shop);
+        
+        switch (shop.NpcType)
+        {
+            case NPCID.Merchant:
+                shop.Add<BookStats>();
+                break;
+        }
+    }
+    
+    private static int GetSoulsByNpc(NPC npc, out bool boss)
+    {
+        boss = false;
+        var npcId = npc.type;
+        var souls = 0;
+        
+        switch (npcId)
+        {
+            // Pre-Hardmode Bosses
+            // King Slime
+            case NPCID.KingSlime:
+            {
+                NPC kingSlime = new();
+                kingSlime.SetDefaults(NPCID.KingSlime);
+                souls = kingSlime.lifeMax;
+                if (NPC.downedSlimeKing)
+                {
+                    souls = (int)(kingSlime.lifeMax * 0.15f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Eye of Cthulhu
+            case NPCID.EyeofCthulhu:
+            {
+                NPC eyeOfCthulhu = new();
+                eyeOfCthulhu.SetDefaults(NPCID.EyeofCthulhu);
+                souls = eyeOfCthulhu.lifeMax;
+                if (NPC.downedBoss1)
+                {
+                    souls = (int)(eyeOfCthulhu.lifeMax * 0.15f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Eater of Worlds
+            case NPCID.EaterofWorldsHead:
+            {
+                NPC eaterOfWorlds = new();
+                eaterOfWorlds.SetDefaults(NPCID.EaterofWorldsHead);
+                souls = NPC.downedBoss2 ? (int)(eaterOfWorlds.lifeMax * 0.1f) : (int)(eaterOfWorlds.lifeMax * 0.5f);
+                boss = true;
+                return souls;
+            }
+            // Brain of Cthulhu
+            case NPCID.BrainofCthulhu:
+            {
+                NPC brainOfCthulhu = new();
+                brainOfCthulhu.SetDefaults(NPCID.BrainofCthulhu);
+                souls = brainOfCthulhu.lifeMax;
+                souls = NPC.downedBoss2
+                    ? (int)(souls * 0.5f)
+                    : (int)(souls * 2.6f); // 50% of HP (only Boss) or 100% of HP (Boss + Creepers = lifeMax * 2.6)
+
+                boss = true;
+                return souls;
+            }
+            // QueenBee
+            case NPCID.QueenBee:
+            {
+                NPC queenBee = new();
+                queenBee.SetDefaults(NPCID.QueenBee);
+                souls = queenBee.lifeMax;
+                souls = NPC.downedQueenBee ? (int)(souls * 0.4f) : (int)(souls * 1.2f);
+                boss = true;
+                return souls;
+            }
+            // Deerclops
+            case NPCID.Deerclops:
+            {
+                NPC deerclops = new();
+                deerclops.SetDefaults(NPCID.Deerclops);
+                souls = deerclops.lifeMax;
+                souls = NPC.downedDeerclops ? (int)(souls * 0.25f) : (int)(souls * 0.8f);
+                boss = true;
+                return souls;
+            }
+            // Skeletron
+            case NPCID.SkeletronHead:
+            {
+                NPC skeletron = new();
+                skeletron.SetDefaults(NPCID.SkeletronHead);
+                NPC skeletronHand = new();
+                skeletron.SetDefaults(NPCID.SkeletronHand);
+                souls = skeletron.lifeMax + 2 * skeletronHand.lifeMax;
+                if (NPC.downedBoss3)
+                {
+                    souls = (int)(souls * 0.4f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            case NPCID.WallofFleshEye:
+            // Wall of Flesh
+            case NPCID.WallofFlesh:
+            {
+                NPC wallOfFlesh = new();
+                wallOfFlesh.SetDefaults(NPCID.WallofFlesh);
+                souls = wallOfFlesh.lifeMax;
+                if (Main.hardMode)
+                {
+                    souls = (int)(souls * 0.4f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Hardmode Bosses
+            // Queen Slime
+            case NPCID.QueenSlimeBoss:
+            {
+                NPC queenSlime = new();
+                queenSlime.SetDefaults(NPCID.QueenSlimeBoss);
+                souls = queenSlime.lifeMax;
+                if (NPC.downedQueenSlime)
+                {
+                    souls = (int)(souls * 0.3f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Destroyer
+            case NPCID.TheDestroyer:
+            {
+                NPC destroyer = new();
+                destroyer.SetDefaults(NPCID.TheDestroyer);
+                souls = destroyer.lifeMax;
+                souls = NPC.downedMechBoss1 ? (int)(souls * 0.1f) : (int)(souls * 0.65f);
+                boss = true;
+                return souls;
+            }
+            case NPCID.Retinazer:
+            // Twins
+            case NPCID.Spazmatism:
+            {
+                if (NPC.AnyNPCs(npcId == NPCID.Retinazer ? NPCID.Spazmatism : NPCID.Retinazer))
+                {
+                    return souls;
+                }
+
+                // Second is not alive
+                NPC retinazer = new();
+                retinazer.SetDefaults(NPCID.Retinazer);
+                NPC spazmatism = new();
+                spazmatism.SetDefaults(NPCID.Spazmatism);
+                souls = retinazer.lifeMax + spazmatism.lifeMax;
+                if (NPC.downedMechBoss2)
+                {
+                    souls = (int)(souls * 0.25f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Skeletron Prime
+            case NPCID.SkeletronPrime:
+            {
+                NPC primeCannon = new();
+                primeCannon.SetDefaults(NPCID.PrimeCannon);
+                NPC primeLaser = new();
+                primeLaser.SetDefaults(NPCID.PrimeLaser);
+                NPC primeSaw = new();
+                primeSaw.SetDefaults(NPCID.PrimeSaw);
+                NPC primeVice = new();
+                primeVice.SetDefaults(NPCID.PrimeVice);
+                souls = primeCannon.lifeMax + primeLaser.lifeMax + primeSaw.lifeMax + primeVice.lifeMax;
+                if (NPC.downedMechBoss3)
+                {
+                    souls = (int)(souls * 0.25f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Plantera
+            case NPCID.Plantera:
+            {
+                NPC plantera = new();
+                plantera.SetDefaults(NPCID.Plantera);
+                souls = (int)(plantera.lifeMax * 2.5f);
+                if (NPC.downedPlantBoss)
+                {
+                    souls = (int)(plantera.lifeMax * 0.5f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Golem
+            case NPCID.Golem:
+            {
+                NPC golem = new();
+                golem.SetDefaults(NPCID.Golem);
+                NPC golemFist = new();
+                golemFist.SetDefaults(NPCID.GolemFistLeft);
+                NPC golemHead = new();
+                golemHead.SetDefaults(NPCID.GolemHead);
+                var golemHp = golem.lifeMax + 2 * golemFist.lifeMax + golemHead.lifeMax;
+                
+                souls = (int)(golemHp * 1.5f); // 90K
+                if (NPC.downedGolemBoss)
+                {
+                    souls = (int)(golemHp * 0.3f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Duke Fishron
+            case NPCID.DukeFishron:
+            {
+                NPC golem = new();
+                golem.SetDefaults(NPCID.Golem);
+                NPC golemFist = new();
+                golemFist.SetDefaults(NPCID.GolemFistLeft);
+                NPC golemHead = new();
+                golemHead.SetDefaults(NPCID.GolemHead);
+                var golemHp = golem.lifeMax + 2 * golemFist.lifeMax + golemHead.lifeMax;
+                
+                souls = golemHp; // souls in relation to Golem
+                souls = NPC.downedFishron ? (int)(souls * 0.35f) : (int)(souls * 1.5f + 15000); // 21K or 105K
+                boss = true;
+                return souls;
+            }
+            // Empress of Light
+            case NPCID.HallowBoss:
+            {
+                NPC empressOfLight = new();
+                empressOfLight.SetDefaults(NPCID.HallowBoss);
+                souls = (int)(empressOfLight.lifeMax * 1.5f) + 15000; // 120K
+                if (NPC.downedEmpressOfLight)
+                {
+                    souls = (int)(empressOfLight.lifeMax * 0.35f); // 24.5K
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Cultist
+            case NPCID.CultistBoss:
+            {
+                NPC empressOfLight = new();
+                empressOfLight.SetDefaults(NPCID.HallowBoss); // souls in relation to Empress of Light
+                souls = (int)(empressOfLight.lifeMax * 1.5f) + 30000; // 135K
+                if (NPC.downedAncientCultist)
+                {
+                    souls = (int)(empressOfLight.lifeMax * 0.4f); // 28K
+                }
+
+                boss = true;
+                return souls;
+            }
+            case NPCID.LunarTowerNebula:
+            case NPCID.LunarTowerSolar:
+            case NPCID.LunarTowerStardust:
+            // Lunar Towers
+            case NPCID.LunarTowerVortex:
+            {
+                NPC tower = new();
+                tower.SetDefaults(npcId);
+                souls = (int)(tower.lifeMax * 1.5f);
+                if ((NPC.downedTowerSolar && npcId == NPCID.LunarTowerSolar) ||
+                    (NPC.downedTowerNebula && npcId == NPCID.LunarTowerNebula) ||
+                    (NPC.downedTowerVortex && npcId == NPCID.LunarTowerVortex) ||
+                    (NPC.downedTowerStardust && npcId == NPCID.LunarTowerStardust)
+                   )
+                {
+                    souls = (int)(souls * 0.5f);
+                }
+
+                boss = true;
+                return souls;
+            }
+            // Moon Lord
+            case NPCID.MoonLordCore:
+            {
+                NPC moonLordCore = new();
+                moonLordCore.SetDefaults(NPCID.MoonLordCore);
+                NPC moonLordHead = new();
+                moonLordHead.SetDefaults(NPCID.MoonLordHead);
+                NPC moonLordHand = new();
+                moonLordHand.SetDefaults(NPCID.MoonLordHand);
+                souls = moonLordCore.lifeMax + moonLordHead.lifeMax + 2 * moonLordHand.lifeMax;
+                souls = NPC.downedMoonlord ? (int)(souls * 0.5f) : (int)(souls * 1.25f); // 72.5K or 181250
+
+                boss = true;
+                return souls;
+            }
+            // bosses that have not been manually handled.
+            default:
+                boss = npc.boss;
+                break;
+        }
+
+        // Blacklist
+        if (NpcIdBlackList.Contains(npcId))
+        {
+            return 0;
+        }
+
+        // Other NPCs
+        npc.GetLifeStats(out _, out var maxStatLife);
+        return maxStatLife;
+    }
+
+    private static readonly HashSet<int> NpcIdBlackList =
+    [
+        NPCID.EaterofWorldsBody,
+        NPCID.EaterofWorldsTail,
+        NPCID.EaterofWorldsHead,
+
+        NPCID.BrainofCthulhu,
+        NPCID.Creeper,
+
+        NPCID.KingSlime,
+        NPCID.SlimeSpiked,
+
+        NPCID.EyeofCthulhu,
+        NPCID.ServantofCthulhu,
+        NPCID.QueenBee,
+
+        NPCID.SkeletronHand,
+        NPCID.SkeletronHead,
+
+        NPCID.WallofFlesh,
+        NPCID.WallofFleshEye,
+        NPCID.TheHungry,
+        NPCID.TheHungryII,
+        NPCID.LeechBody,
+        NPCID.LeechHead,
+        NPCID.LeechTail,
+
+        NPCID.QueenSlimeBoss,
+        NPCID.QueenSlimeMinionBlue,
+        NPCID.QueenSlimeMinionPink,
+        NPCID.QueenSlimeMinionPurple,
+
+        NPCID.Retinazer,
+        NPCID.Spazmatism,
+
+        NPCID.TheDestroyer,
+        NPCID.TheDestroyerBody,
+        NPCID.TheDestroyerTail,
+        NPCID.Probe,
+
+        NPCID.SkeletronPrime,
+        NPCID.PrimeCannon,
+        NPCID.PrimeLaser,
+        NPCID.PrimeSaw,
+        NPCID.PrimeVice,
+
+        NPCID.Plantera,
+        NPCID.PlanterasTentacle,
+
+        NPCID.Golem,
+        NPCID.GolemFistLeft,
+        NPCID.GolemFistRight,
+        NPCID.GolemHead,
+        NPCID.GolemHeadFree,
+
+        NPCID.DukeFishron,
+        NPCID.Sharkron,
+        NPCID.Sharkron2,
+
+        NPCID.HallowBoss,
+
+        NPCID.CultistBoss,
+        NPCID.CultistBossClone,
+        NPCID.CultistDragonBody1,
+        NPCID.CultistDragonBody2,
+        NPCID.CultistDragonBody3,
+        NPCID.CultistDragonBody4,
+        NPCID.CultistDragonHead,
+        NPCID.CultistDragonTail,
+
+        NPCID.SolarCrawltipedeBody,
+        NPCID.SolarCrawltipedeTail,
+
+        NPCID.LunarTowerSolar,
+        NPCID.LunarTowerVortex,
+        NPCID.LunarTowerNebula,
+        NPCID.LunarTowerStardust,
+
+        NPCID.StardustCellSmall,
+
+        NPCID.MoonLordCore,
+        NPCID.MoonLordFreeEye,
+        NPCID.MoonLordHand,
+        NPCID.MoonLordHead,
+        NPCID.MoonLordLeechBlob
+    ];
 }
