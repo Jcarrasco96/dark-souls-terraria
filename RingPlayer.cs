@@ -218,7 +218,7 @@ public class RingPlayer : ModPlayer
     {
         base.OnEnterWorld();
         
-        BossUiManager.ShowMessage("Welcome, don't forget to equip your rings.", new Color(248, 197, 77));
+        // BossUiManager.ShowMessage("Welcome, don't forget to equip your rings.", new Color(248, 197, 77));
         
         var lostSoul = Bloodstains.FirstOrDefault(s => s.WorldGuid == Main.ActiveWorldFileData.UniqueId.ToString());
         if (lostSoul != null && Main.myPlayer == Player.whoAmI)

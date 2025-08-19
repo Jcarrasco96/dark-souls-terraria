@@ -77,7 +77,6 @@ public static class StatFormulas
     
     public static long GetReqSoulsByLevel(int level)
     {
-        return level * 2;
         return level switch
         {
             > 0 and < 35 => (int)(500 * Math.Pow(1.025, level - 1)), // 1 - 35

@@ -1,1 +1,34 @@
-This description will show up on the steam page, check out https://steamcommunity.com/comment/Guide/formattinghelp.
+TerraSouls – The Ultimate Souls-Like Experience in Terraria
+
+Immerse yourself in a dark and challenging Terraria, inspired by the Dark Souls series.
+With TerraSouls, every fight is more strategic, every death more meaningful, and every victory much more satisfying.
+
+What You'll Find
+- Player Progression System: Level up and strengthen your character with Strength, Dexterity, Intelligence, or Faith.
+- Weapon Scaling: Your stats define the true power of your weapons.
+- Bloodstains: When you die, you leave a trail that preserves your souls and humanity. Will you be able to recover them?
+- Deeper Elemental Combat:
+- NPCs and bosses now have unique resistances and weaknesses to fire, ice, poison, and lightning.
+- Some bosses reduce elemental damage even further—be prepared to think strategically!
+- New items and legendary rings with unique effects to enhance your playstyle.
+- Special drops: from rare rings on zombies to powerful souls upon defeating bosses.
+- New atmosphere: Redesigned start and death screens with a somber and immersive feel.
+
+What's to come:
+- This is just the beginning. Coming soon:
+- More unique items and recipes.
+- New rings and advanced mechanics.
+
+An increasingly complete and challenging experience.
+
+Are you ready to test your skills and forge your destiny in TerraSouls?
+
+Contribute to TerraSouls
+
+Do you want to be part of the development of TerraSouls?
+Your help can make a difference: from code, ideas, balance, to new content.
+
+The entire project is open on GitHub.
+If you'd like to collaborate, make suggestions, or send pull requests, you're welcome!
+
+Visit the repository on GitHub (https://github.com/Jcarrasco96/dark-souls-terraria) and join the community.

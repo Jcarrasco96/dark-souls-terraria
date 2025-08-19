@@ -470,6 +470,7 @@ public class GlobalNpcChanges : GlobalNPC
         {
             case NPCID.Merchant:
                 shop.Add<RosterOfKnights>();
+                shop.Add<Darksign>();
                 break;
         }
     }

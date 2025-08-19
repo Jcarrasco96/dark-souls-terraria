@@ -1,1 +1,12 @@
-Modify this file with a description of your mod.
+TerraSouls brings a souls-like experience to Terraria:
+
+- Leveling system with Strength, Dexterity, Intelligence, and Faith.
+- Weapons with stat scaling.
+- Bloodstains upon death to restore souls and humanity.
+- Elemental resistances and weaknesses on enemies and bosses.
+- New rings, items, recipes, and unique drops.
+- Revamped death screen and start menu.
+
+More items, bosses, and mechanics coming soon!
+
+Visit the repository on GitHub (https://github.com/Jcarrasco96/dark-souls-terraria) and join the community.

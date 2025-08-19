@@ -14,7 +14,7 @@
 * NPCID.IceGolem +50% ice resistance, -50% fire resistance
 * NPCID.Retinazer +20% fire resistance
 * NPCID.Spazmatism +20% poison resistance
-* NPCID.Merchant sells RosterOfKnights (to level without a bonfire)
+* NPCID.Merchant sells RosterOfKnights (to level without a bonfire), Darksign
 * NPCID.GiantTortoise drop ChloranthyRing 8.33%
 * NPCID.Zombie, NPCID.ZombieRaincoat, NPCID.BigRainZombie, NPCID.SmallRainZombie drop DarkStoneplateRing 0.2%, CovetousGoldSerpentRing 1%, CovetousSilverSerpentRing 1%, LifeRing 1%
 * Many bosses drop their respective boss souls (more to come soon)
