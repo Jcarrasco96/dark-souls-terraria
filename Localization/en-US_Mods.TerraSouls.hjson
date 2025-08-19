@@ -1,0 +1,167 @@
+Items: {
+	SerpentRing: {
+		Tooltip: ""
+		DisplayName: Serpent Ring
+	}
+
+	RingOfStrength: {
+		Tooltip: ""
+		DisplayName: Ring Of Strength
+	}
+
+	RingOfSteelProtection: {
+	}
+
+	RingOfRay: {
+		Tooltip: ""
+		DisplayName: Ring Of Ray
+	}
+
+	RingOfLife: {
+		Tooltip: ""
+		DisplayName: Ring Of Life
+	}
+
+	DarkStoneplateRing: {
+	}
+
+	CursebiteRing: {
+	}
+
+	ChloranthyRing: {
+	}
+
+	SoulOfSkeletron: {
+	}
+
+	Shortsword: {
+	}
+
+	ExampleSoul: {
+	}
+
+	BonfireItem: {
+	}
+
+	MoonSword: {
+	}
+
+	Soul01: {
+	}
+
+	Soul02: {
+	}
+
+	Soul03: {
+	}
+
+	Soul04: {
+	}
+
+	Soul05: {
+	}
+
+	Soul06: {
+	}
+
+	Soul07: {
+	}
+
+	Soul08: {
+	}
+
+	Soul09: {
+	}
+
+	Soul10: {
+	}
+
+	CovetousGoldSerpentRing: {
+	}
+
+	CovetousSilverSerpentRing: {
+	}
+
+	KnightsRing: {
+	}
+
+	LifeRing: {
+	}
+
+	MagicClutchRing: {
+	}
+
+	HuntersRing: {
+	}
+
+	PriestessRing: {
+	}
+
+	ScholarRing: {
+	}
+
+	BookStats: {
+		DisplayName: Book Stats
+		Tooltip: ""
+	}
+
+	BellowingDragoncrestRing: {
+	}
+
+	DuskCrownRing: {
+	}
+
+	HornetRing: {
+	}
+
+	YoungDragonRing: {
+	}
+
+	Darksign: {
+	}
+
+	RosterOfKnights: {
+	}
+
+	NewWeapon: {
+		DisplayName: New Weapon
+		Tooltip: ""
+	}
+
+	Humanity: {
+		DisplayName: Humanity
+		Tooltip: ""
+	}
+}
+
+Buffs: {
+	ExampleDefenseDebuff: {
+	}
+
+	BurnDebuff: {
+	}
+
+	AcidVenomBuff: {
+	}
+}
+
+UI: {
+	YouDiedUI: {
+		MainText: YOU DIED
+		RespawningText: Respawning in {0} seconds...
+	}
+}
+
+BloodstainMessage:
+	'''
+	You have retrieved your lost souls and humanity!
+	Souls: +{0}
+	Humanity: +{1}
+	'''
+
+Prefixes: {
+	ExamplePrefix.DisplayName: Example Prefix
+	MoreExamplePrefix.DisplayName: More Example Prefix
+	+1.DisplayName: +1
+	+2.DisplayName: +2
+}

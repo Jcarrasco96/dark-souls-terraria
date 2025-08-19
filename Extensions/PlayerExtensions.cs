@@ -1,14 +1,14 @@
 ﻿using System;
 using Terraria;
 
-namespace CustomRecipes.Extensions;
+namespace TerraSouls.Extensions;
 
 public static class PlayerExtensions
 {
     private static int CountCoins(this Player player)
     {
         var totalCopper = 0;
-        for (var i = 0; i < 59; i++) // inventario normal
+        for (var i = 0; i < 59; i++)
         {
             var item = player.inventory[i];
             if (item != null && item.IsCoin())

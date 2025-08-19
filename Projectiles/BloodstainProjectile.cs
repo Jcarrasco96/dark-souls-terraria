@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CustomRecipes.Projectiles;
+namespace TerraSouls.Projectiles;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class BloodstainProjectile : ModProjectile
 {
     public override void SetDefaults()
@@ -16,6 +17,7 @@ public class BloodstainProjectile : ModProjectile
         Projectile.timeLeft = int.MaxValue;
         Projectile.tileCollide = false;
         Projectile.ignoreWater = true;
+        Projectile.penetrate = -1;
     }
 
     public override void AI()

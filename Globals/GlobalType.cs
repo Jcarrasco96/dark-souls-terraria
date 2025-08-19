@@ -1,4 +1,4 @@
-﻿namespace CustomRecipes.Globals;
+﻿namespace TerraSouls.Globals;
 
 public enum GlobalType
 {

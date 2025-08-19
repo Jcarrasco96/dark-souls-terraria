@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Import tModLoader mod properties -->
+	<Import Project="..\tModLoader.targets" />
+
+	<!-- General -->
+	<PropertyGroup>
+		
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="exclude\**" />
+	  <Compile Remove=".exclude\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Remove="exclude\**" />
+	  <EmbeddedResource Remove=".exclude\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AdditionalFiles Remove="exclude\**" />
+	  <AdditionalFiles Remove=".exclude\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="exclude\**" />
+	  <None Remove=".exclude\**" />
+	</ItemGroup>
+
+	<!-- References -->
+
+</Project>

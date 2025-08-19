@@ -4,10 +4,11 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
+using TerraSouls.UI.Elements;
 
-namespace CustomRecipes.UI;
+namespace TerraSouls.UI;
 
-public class BonfireUi : UIState
+public class BonfireUi : CustomUiState
 {
     private UIPanel _mainPanel;
     private readonly List<UIText> _bonfireOptions = [];
@@ -68,5 +69,10 @@ public class BonfireUi : UIState
     {
         _system.TeleportToBonfire(Main.LocalPlayer, index);
         _system.HideBonfiresUi();
+    }
+
+    public override int InsertionIndex(List<GameInterfaceLayer> layers)
+    {
+        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
     }
 }

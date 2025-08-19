@@ -1,13 +1,16 @@
-using CustomRecipes.Rings;
+using System;
+using TerraSouls.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace CustomRecipes.UI;
+namespace TerraSouls.UI;
 
 public class RingSlot : UIElement
 {
@@ -15,45 +18,57 @@ public class RingSlot : UIElement
 
     private static RingPlayer RingPlayer => Main.LocalPlayer.GetModPlayer<RingPlayer>();
 
-    public const int Size = 52;
+    public const int Size = 64;
+    private const int ItemSize = 32;
 
     public RingSlot(int index)
     {
         _index = index;
 
-        Width.Set(Size, 1f);
-        Height.Set(Size, 1f);
+        _textureNormal = ModContent.Request<Texture2D>("TerraSouls/Assets/BG_RING_DS");
+        _textureHover = ModContent.Request<Texture2D>("TerraSouls/Assets/BG_RING_HOVER_DS");
+
+        Width.Set(_textureNormal.Width(), 0f);
+        Height.Set(_textureNormal.Height(), 0f);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        base.Draw(spriteBatch);
+        var isHover = IsMouseHovering;
 
-        var bgTexture = IsMouseHovering ? TextureAssets.InventoryBack15.Value : TextureAssets.InventoryBack12.Value;
+        var pos = GetDimensions().Position();
 
-        spriteBatch.Draw(bgTexture, GetDimensions().Position(), Color.White);
+        spriteBatch.Draw(_textureNormal.Value, pos, Color.White);
+        
+        if (isHover)
+        {
+            var alpha = RingSlotsUi.GetPulseAlpha();
+            spriteBatch.Draw(_textureHover.Value, pos, Color.White * alpha);
+        }
 
         var item = RingPlayer.RingSlots[_index];
-
+        
         if (item.IsAir)
         {
             return;
         }
 
         var itemTexture = TextureAssets.Item[item.type].Value;
+        var itemPos = pos + new Vector2(_textureNormal.Value.Width / 2f, _textureNormal.Value.Height / 2f);
+        var scale = 1f;
 
-        var slotPos = GetDimensions().Position() + new Vector2(Size / 2f);
-
-        spriteBatch.Draw(itemTexture, slotPos, null, Color.White, 0f, itemTexture.Size() * 0.5f,
-            (Size - 20f) / itemTexture.Height, SpriteEffects.None, 0f);
-
-        if (!IsMouseHovering)
+        if (itemTexture.Width > ItemSize || itemTexture.Height > ItemSize)
         {
-            return;
+            scale = (float)ItemSize / Math.Max(itemTexture.Width, itemTexture.Height);
         }
 
-        Main.hoverItemName = item.Name;
-        Main.HoverItem = item.Clone();
+        spriteBatch.Draw(itemTexture, itemPos, null, Color.White, 0f, itemTexture.Size() / 2f, scale, SpriteEffects.None, 0f);
+            
+        if (isHover)
+        {
+            Main.hoverItemName = item.Name;
+            Main.HoverItem = item.Clone();
+        }
     }
 
     public override void LeftClick(UIMouseEvent evt)
@@ -69,4 +84,7 @@ public class RingSlot : UIElement
         Utils.Swap(ref RingPlayer.RingSlots[_index], ref Main.mouseItem);
         SoundEngine.PlaySound(SoundID.Grab);
     }
+    
+    private readonly Asset<Texture2D> _textureNormal;
+    private readonly Asset<Texture2D> _textureHover;
 }

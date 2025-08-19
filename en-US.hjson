@@ -1,0 +1,293 @@
+Mods: {
+	TerraSouls: {
+		"Keybinds.Abrir UI de Leveleo.DisplayName": Abrir  U I de  Leveleo
+
+		InfoDisplays: {
+			MyInfoDisplay.DisplayName: My Info Display
+			SoulsInfoDisplay.DisplayName: Souls Info Display
+		}
+
+		Buffs: {
+			AcidVenomBuff: {
+				DisplayName: Acid Venom Buff
+				Description: Mods.TerraSouls.Buffs.AcidVenomBuff.Description
+			}
+
+			BurnDebuff: {
+				DisplayName: Burn Debuff
+				Description: Mods.TerraSouls.Buffs.BurnDebuff.Description
+			}
+
+			ExampleDefenseDebuff: {
+				DisplayName: Example Defense Debuff
+				Description: Mods.TerraSouls.Buffs.ExampleDefenseDebuff.Description
+			}
+		}
+
+		Items: {
+			BonfireItem: {
+				DisplayName: Bonfire Item
+				Tooltip: ""
+			}
+
+			Darksign: {
+				DisplayName: Darksign
+				Tooltip: ""
+			}
+
+			ExampleSoul: {
+				DisplayName: Example Soul
+				Tooltip: ""
+			}
+
+			MoonSword: {
+				DisplayName: Moon Sword
+				Tooltip: ""
+			}
+
+			BellowingDragoncrestRing: {
+				DisplayName: Bellowing Dragoncrest Ring
+				Tooltip: ""
+			}
+
+			ChloranthyRing: {
+				DisplayName: Chloranthy Ring
+				Tooltip: ""
+			}
+
+			CovetousGoldSerpentRing: {
+				DisplayName: Covetous Gold Serpent Ring
+				Tooltip: ""
+			}
+
+			CovetousSilverSerpentRing: {
+				DisplayName: Covetous Silver Serpent Ring
+				Tooltip: ""
+			}
+
+			CursebiteRing: {
+				DisplayName: Cursebite Ring
+				Tooltip: ""
+			}
+
+			DarkStoneplateRing: {
+				DisplayName: Dark Stoneplate Ring
+				Tooltip: ""
+			}
+
+			DuskCrownRing: {
+				DisplayName: Dusk Crown Ring
+				Tooltip: ""
+			}
+
+			HornetRing: {
+				DisplayName: Hornet Ring
+				Tooltip: ""
+			}
+
+			HuntersRing: {
+				DisplayName: Hunters Ring
+				Tooltip: ""
+			}
+
+			KnightsRing: {
+				DisplayName: Knights Ring
+				Tooltip: ""
+			}
+
+			LifeRing: {
+				DisplayName: Life Ring
+				Tooltip: ""
+			}
+
+			MagicClutchRing: {
+				DisplayName: Magic Clutch Ring
+				Tooltip: ""
+			}
+
+			PriestessRing: {
+				DisplayName: Priestess Ring
+				Tooltip: ""
+			}
+
+			RingOfSteelProtection: {
+				DisplayName: Ring Of Steel Protection
+				Tooltip: ""
+			}
+
+			ScholarRing: {
+				DisplayName: Scholar Ring
+				Tooltip: ""
+			}
+
+			YoungDragonRing: {
+				DisplayName: Young Dragon Ring
+				Tooltip: ""
+			}
+
+			RosterOfKnights: {
+				DisplayName: Roster Of Knights
+				Tooltip: ""
+			}
+
+			Shortsword: {
+				DisplayName: Shortsword
+				Tooltip: ""
+			}
+
+			Soul01: {
+				DisplayName: Soul01
+				Tooltip: ""
+			}
+
+			Soul02: {
+				DisplayName: Soul02
+				Tooltip: ""
+			}
+
+			Soul03: {
+				DisplayName: Soul03
+				Tooltip: ""
+			}
+
+			Soul04: {
+				DisplayName: Soul04
+				Tooltip: ""
+			}
+
+			Soul05: {
+				DisplayName: Soul05
+				Tooltip: ""
+			}
+
+			Soul06: {
+				DisplayName: Soul06
+				Tooltip: ""
+			}
+
+			Soul07: {
+				DisplayName: Soul07
+				Tooltip: ""
+			}
+
+			Soul08: {
+				DisplayName: Soul08
+				Tooltip: ""
+			}
+
+			Soul09: {
+				DisplayName: Soul09
+				Tooltip: ""
+			}
+
+			Soul10: {
+				DisplayName: Soul10
+				Tooltip: ""
+			}
+
+			SoulOfSkeletron: {
+				DisplayName: Soul Of Skeletron
+				Tooltip: ""
+			}
+
+			SoulOfTheBrainOfCthulhu: {
+				DisplayName: Soul Of The Brain Of Cthulhu
+				Tooltip: ""
+			}
+
+			SoulOfTheEyeOfCthulhu: {
+				DisplayName: Soul Of The Eye Of Cthulhu
+				Tooltip: ""
+			}
+
+			SoulOfTheKingSlime: {
+				DisplayName: Soul Of The King Slime
+				Tooltip: ""
+			}
+
+			SoulOfDeerclops: {
+				DisplayName: Soul Of Deerclops
+				Tooltip: ""
+			}
+
+			SoulOfTheQueenBee: {
+				DisplayName: Soul Of The Queen Bee
+				Tooltip: ""
+			}
+
+			SoulOfTheWallOfFlesh: {
+				DisplayName: Soul Of The Wall Of Flesh
+				Tooltip: ""
+			}
+
+			SoulOfTheWorldEater: {
+				DisplayName: Soul Of The World Eater
+				Tooltip: ""
+			}
+
+			SoulOfSkeletronPrime: {
+				DisplayName: Soul Of Skeletron Prime
+				Tooltip: ""
+			}
+
+			SoulOfTheDestroyer: {
+				DisplayName: Soul Of The Destroyer
+				Tooltip: ""
+			}
+
+			SoulOfTheTwins: {
+				DisplayName: Soul Of The Twins
+				Tooltip: ""
+			}
+
+			SoulmassStaff: {
+				DisplayName: Soulmass Staff
+				Tooltip: ""
+			}
+
+			GodricksGreatRune: {
+				DisplayName: Godricks Great Rune
+				Tooltip: ""
+			}
+
+			GreatRuneOfTheUnborn: {
+				DisplayName: Great Rune Of The Unborn
+				Tooltip: ""
+			}
+
+			MaleniasGreatRune: {
+				DisplayName: Malenias Great Rune
+				Tooltip: ""
+			}
+
+			MohgsGreatRune: {
+				DisplayName: Mohgs Great Rune
+				Tooltip: ""
+			}
+
+			MorgottsGreatRune: {
+				DisplayName: Morgotts Great Rune
+				Tooltip: ""
+			}
+
+			RadahnsGreatRune: {
+				DisplayName: Radahns Great Rune
+				Tooltip: ""
+			}
+
+			RykardsGreatRune: {
+				DisplayName: Rykards Great Rune
+				Tooltip: ""
+			}
+		}
+
+		Projectiles: {
+			BloodstainProjectile.DisplayName: Bloodstain Projectile
+			MagicMissile.DisplayName: Magic Missile
+			SoulmassProjectile.DisplayName: Soulmass Projectile
+		}
+
+		NPCs.WeaponUpgradeNPC.DisplayName: Weapon Upgrade N P C
+		ResourceDisplaySets.CustomResourceBars.DisplayName: Custom Resource Bars
+	}
+}

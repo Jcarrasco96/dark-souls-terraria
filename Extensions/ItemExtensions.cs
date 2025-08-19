@@ -1,12 +1,14 @@
-﻿using CustomRecipes.ScalingParams;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
+using TerraSouls.Commons;
+using TerraSouls.Enums;
+using TerraSouls.Items;
 
-namespace CustomRecipes.Extensions;
+namespace TerraSouls.Extensions;
 
 public static class ItemExtensions
 {
-    public static int CoinValue(this Item item, int type)
+    public static int CoinValue(this Item _, int type)
     {
         // Valores en cobre de monedas vanilla:
         // Cobre = 1, Plata = 100, Oro = 10000, Platino = 1000000
@@ -66,22 +68,25 @@ public static class ItemExtensions
     
     public static DamageBonuses GetBonusDamage(this Item item)
     {
-        if (!CustomRecipes.AllWeaponsParams.TryGetValue(item.type, out var wp))
+        var player = Main.LocalPlayer.GetModPlayer<RingPlayer>();
+
+        var wp = item.WeaponParams();
+        
+        if (wp.IsEmpty())
         {
             return new DamageBonuses();
         }
-
-        var player = Main.LocalPlayer.GetModPlayer<RingPlayer>();
         
-        var bonusDamageByStrength = (int)(GetScalingGradeModifier(wp.StrScalingGrade) * StatFormulas.GetPotentialByStrength(player.RealStr()) * wp.Saturation);
-        var bonusDamageByDexterity = (int)(GetScalingGradeModifier(wp.DexScalingGrade) * StatFormulas.GetPotentialByDexterity(player.RealDex()) * wp.Saturation);
-        var bonusDamageByIntelligence = (int)(GetScalingGradeModifier(wp.IntScalingGrade) * StatFormulas.GetPotentialByIntelligence(player.RealInt()) * wp.Saturation);
-        var bonusDamageByFaith = (int)(GetScalingGradeModifier(wp.FaiScalingGrade) * StatFormulas.GetPotentialByFaith(player.RealFai()) * wp.Saturation);
-        var totalBonusDamage = bonusDamageByStrength + bonusDamageByDexterity + bonusDamageByIntelligence + bonusDamageByFaith;
-        return new DamageBonuses(totalBonusDamage, bonusDamageByStrength, bonusDamageByDexterity, bonusDamageByIntelligence, bonusDamageByFaith);
+        var bonusDmgStrength = (int)(ScalingGradeModifier(wp.StrScalingGrade) * StatFormulas.GetPotentialByStrength(player.RealStr()) * wp.Saturation);
+        var bonusDmgDexterity = (int)(ScalingGradeModifier(wp.DexScalingGrade) * StatFormulas.GetPotentialByDexterity(player.RealDex()) * wp.Saturation);
+        var bonusDmgIntelligence = (int)(ScalingGradeModifier(wp.IntScalingGrade) * StatFormulas.GetPotentialByIntelligence(player.RealInt()) * wp.Saturation);
+        var bonusDmgFaith = (int)(ScalingGradeModifier(wp.FaiScalingGrade) * StatFormulas.GetPotentialByFaith(player.RealFai()) * wp.Saturation);
+        var totalBonusDamage = bonusDmgStrength + bonusDmgDexterity + bonusDmgIntelligence + bonusDmgFaith;
+            
+        return new DamageBonuses(totalBonusDamage, bonusDmgStrength, bonusDmgDexterity, bonusDmgIntelligence, bonusDmgFaith);
     }
     
-    private static float GetScalingGradeModifier(ScalingGrade level)
+    private static float ScalingGradeModifier(ScalingGrade level)
     {
         return level switch
         {
@@ -93,6 +98,18 @@ public static class ItemExtensions
             ScalingGrade.E => 0.15f,
             _ => 0f,
         };
+    }
+
+    public static WeaponParams WeaponParams(this Item item)
+    {
+        TerraSouls.AllWeaponsParams.TryGetValue(item.type, out var wp);
+        
+        if (item.ModItem is ModWeaponParams modWeaponParams)
+        {
+            wp = modWeaponParams.WeaponParams;
+        }
+
+        return wp;
     }
     
 }

@@ -1,33 +1,21 @@
-using Terraria.GameContent.UI.Elements;
+using System;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.UI;
+using TerraSouls.UI.Elements;
 
-namespace CustomRecipes.UI;
+namespace TerraSouls.UI;
 
-public class RingSlotsUi : UIState
+public class RingSlotsUi : CustomUiState
 {
-    private UIPanel _panel;
     private readonly RingSlot[] _ringSlots = new RingSlot[4];
+    public override bool Visible => Main.playerInventory;
+
+    // private RuneSlot _runeSlot;
 
     public override void OnInitialize()
     {
         const int padding = 5;
-
-        _panel = new UIPanel
-        {
-            Left = { Pixels = 600, Percent = 0f },
-            Top = { Pixels = 20, Percent = 0f },
-            Width =
-            {
-                Pixels = _ringSlots.Length * RingSlot.Size + 2 * padding + (_ringSlots.Length - 1) * padding,
-                Percent = 0f
-            }, // 4 slots * 52px + 2 * 10 padding + 3 * 10 spacing
-            Height = { Pixels = 1 * RingSlot.Size + 2 * padding, Percent = 0f }, // 1 slot * 52px + 2 * 10 padding
-            PaddingBottom = padding,
-            PaddingTop = padding,
-            PaddingLeft = padding,
-            PaddingRight = padding
-        };
-        Append(_panel);
 
         const float slotSpacing = padding + RingSlot.Size;
 
@@ -35,12 +23,32 @@ public class RingSlotsUi : UIState
         {
             _ringSlots[i] = new RingSlot(i)
             {
-                Left = { Pixels = i * slotSpacing, Percent = 0f },
-                Top = { Pixels = 0f },
+                Left = { Pixels = 600 + i * slotSpacing, Percent = 0f },
+                Top = { Pixels = 20f },
                 Width = { Pixels = RingSlot.Size, Percent = 0f },
                 Height = { Pixels = RingSlot.Size, Percent = 0f }
             };
-            _panel.Append(_ringSlots[i]);
+            Append(_ringSlots[i]);
         }
+
+        // _runeSlot = new RuneSlot
+        // {
+        //     Left = { Pixels = 600f, Percent = 0f },
+        //     Top = { Pixels = 90f },
+        //     Width = { Pixels = RuneSlot.Size, Percent = 0f },
+        //     Height = { Pixels = RuneSlot.Size, Percent = 0f }
+        // };
+        // Append(_runeSlot);
+    }
+
+    public override int InsertionIndex(List<GameInterfaceLayer> layers)
+    {
+        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+    }
+    
+    public static float GetPulseAlpha()
+    {
+        // M = 0.2f, A = 0.1f
+        return 0.15f + 0.05f * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 3f);
     }
 }

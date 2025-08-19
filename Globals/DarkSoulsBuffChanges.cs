@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using CustomRecipes.ScalingParams;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerraSouls.Commons;
 
-namespace CustomRecipes.Globals;
+namespace TerraSouls.Globals;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class DarkSoulsBuffChanges : GlobalBuff
 {
     public static readonly List<int> TerrariaDebuff =

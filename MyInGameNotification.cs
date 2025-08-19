@@ -1,5 +1,4 @@
-﻿using CustomRecipes.Buffs;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -8,7 +7,7 @@ using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace CustomRecipes;
+namespace TerraSouls;
 
 /**
  * how to use
@@ -16,8 +15,7 @@ namespace CustomRecipes;
  */
 public class MyInGameNotification(string title) : IInGameNotification
 {
-    
-    private readonly Asset<Texture2D> _iconTexture = TextureAssets.Buff[ModContent.BuffType<ExampleDefenseDebuff>()];
+    private readonly Asset<Texture2D> _iconTexture = ModContent.Request<Texture2D>("TerraSouls/Assets/Textures/Level", AssetRequestMode.ImmediateLoad);
     
     public void Update()
     {
@@ -119,5 +117,4 @@ public class MyInGameNotification(string title) : IInGameNotification
             _timeLeft = 30;
         }
     }
-    
 }

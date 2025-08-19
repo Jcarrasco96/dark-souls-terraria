@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
@@ -8,27 +9,26 @@ using Terraria.GameContent;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using TerraSouls.UI.Elements;
 
-namespace CustomRecipes.UI;
+namespace TerraSouls.UI;
 
 [Autoload(Side = ModSide.Client)]
-public class DeathUi : UIState
+public class DeathUi : CustomUiState
 {
     private float _alpha;
     private bool _fadingIn;
     private bool _fadingOut;
 
     public bool IsActive => _alpha > 0f || _fadingIn || _fadingOut;
-
-    public Action OnFadeOutComplete;
-
+    
     public void StartFadeIn()
     {
         _alpha = 0f;
         _fadingIn = true;
         _fadingOut = false;
 
-        SoundEngine.PlaySound(CustomRecipes.DsThruDeath);
+        SoundEngine.PlaySound(TerraSouls.DsThruDeath);
     }
 
     public void StartFadeOut()
@@ -68,7 +68,7 @@ public class DeathUi : UIState
             _alpha = 0f;
             _fadingOut = false;
 
-            OnFadeOutComplete?.Invoke();
+            Visible = false;
         }
     }
 
@@ -79,8 +79,8 @@ public class DeathUi : UIState
         spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
             Color.Black * _alpha);
 
-        var text = Language.GetText("Mods.CustomRecipes.UI.YouDiedUI.MainText").Value;
-        var font = CustomRecipes.OptimusPrincepsFont;
+        var text = Language.GetText("Mods.TerraSouls.UI.YouDiedUI.MainText").Value;
+        var font = TerraSouls.OptimusPrincepsFont;
         var textSize = font.MeasureString(text) * TextScale;
         var position = new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f) - textSize / 2f;
 
@@ -90,7 +90,7 @@ public class DeathUi : UIState
             SpriteEffects.None, 0f);
 
         var respawnTimeInSeconds = (int)Math.Ceiling(Main.LocalPlayer.respawnTimer / 60f);
-        var respawnText = Language.GetText("Mods.CustomRecipes.UI.YouDiedUI.RespawningText")
+        var respawnText = Language.GetText("Mods.TerraSouls.UI.YouDiedUI.RespawningText")
             .WithFormatArgs(respawnTimeInSeconds).Value;
         var respawnTextSize = font.MeasureString(respawnText) * 0.3f;
         var respawnPosition = new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f) - respawnTextSize / 2f +
@@ -101,4 +101,11 @@ public class DeathUi : UIState
         spriteBatch.DrawString(font, respawnText, respawnPosition, Color.Gray * _alpha, 0f, Vector2.Zero, 0.3f,
             SpriteEffects.None, 0f);
     }
+
+    public override int InsertionIndex(List<GameInterfaceLayer> layers)
+    {
+        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
+    }
+
+    public override bool Visible => IsActive;
 }
